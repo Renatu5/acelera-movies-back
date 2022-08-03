@@ -33,7 +33,7 @@ export class movie {
   @Column({ name: "director", type: "varchar" })
   director: String
 
-  @Column({ name: "write", type: "varchar" })
+  @Column({ name: "writer", type: "varchar" })
   writer: String
 
   @Column({ name: "studio", type: "varchar" })

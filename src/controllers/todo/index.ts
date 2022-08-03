@@ -24,10 +24,22 @@ export const getMovieId = (request, response) => {
   try {
     const id = request.params
     const movieRepository = getRepository(movie)
-    const movies = movieRepository.find(id)
+    const movieList = movieRepository.find(id)
 
-    return response.status(200).json(movies)
+    return response.status(200).json(movieList)
   } catch (error) {
     return response.status(404).json(error)
+  }
+}
+
+export const postMovie = async (request, response) => {
+  try {
+    const movieRepository = getRepository(movie)
+    const addMovie = request.body
+    const addNewMovie = await movieRepository.save(addMovie)
+
+    return response.status(200).json(addNewMovie)
+  } catch (error) {
+    return response.status(500).json(error)
   }
 }
