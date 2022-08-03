@@ -1,4 +1,5 @@
 import { movie } from "@models/entity/movie"
+import { response } from "express"
 import { getRepository } from "typeorm"
 
 export const itsWorks = (request, response) => {
@@ -11,8 +12,8 @@ export const getTODO = (request, response) => {
 
 export const getAllMovies = async (request, response) => {
   try {
-    const movieRepository = getRepository(movie)
-    const movies = await movieRepository.find()
+    const moviesRepository = getRepository(movie)
+    const movies = await moviesRepository.find()
     console.log(movies)
     return response.status(200).json(movies)
   } catch (error) {
@@ -20,11 +21,11 @@ export const getAllMovies = async (request, response) => {
   }
 }
 
-export const getMovieId = (request, response) => {
+export const getMovieId = async (request, response) => {
   try {
     const id = request.params
-    const movieRepository = getRepository(movie)
-    const movieList = movieRepository.find(id)
+    const moviesRepository = getRepository(movie)
+    const movieList = await moviesRepository.findOne(id)
 
     return response.status(200).json(movieList)
   } catch (error) {
@@ -34,12 +35,24 @@ export const getMovieId = (request, response) => {
 
 export const postMovie = async (request, response) => {
   try {
-    const movieRepository = getRepository(movie)
+    const moviesRepository = getRepository(movie)
     const addMovie = request.body
-    const addNewMovie = await movieRepository.save(addMovie)
+    const addNewMovie = await moviesRepository.save(addMovie)
 
     return response.status(200).json(addNewMovie)
   } catch (error) {
     return response.status(500).json(error)
+  }
+}
+
+export const deleteMovie = async (request, response) => {
+  try {
+    const moviesRepository = getRepository(movie)
+    const { id } = request.params
+    const deleteMovie = await moviesRepository.delete(id)
+
+    return response.status(200).json(deleteMovie)
+  } catch (error) {
+    return response.status(404).json(error)
   }
 }

@@ -1,4 +1,5 @@
 import {
+  deleteMovie,
   getAllMovies,
   getMovieId,
   getTODO,
@@ -13,4 +14,5 @@ export const defineRoutes = (app) => {
   app.get("/movie_list", getAllMovies)
   app.get("/movie_list/:id", getMovieId)
   app.post("/movie_list", postMovie)
+  app.delete("/movie_list/:id", deleteMovie)
 }
