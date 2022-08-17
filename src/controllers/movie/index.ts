@@ -1,13 +1,9 @@
 import { movie } from "@models/entity/movie"
-import { response } from "express"
+import { datacatalog } from "googleapis/build/src/apis/datacatalog"
 import { getRepository } from "typeorm"
 
 export const itsWorks = (request, response) => {
   return response.json({ message: "It's Works!!" })
-}
-
-export const getTODO = (request, response) => {
-  return response.json({ todos: [] })
 }
 
 export const getAllMovies = async (request, response) => {
@@ -34,15 +30,11 @@ export const getMovieId = async (request, response) => {
 }
 
 export const postMovie = async (request, response) => {
-  try {
-    const moviesRepository = getRepository(movie)
-    const addMovie = request.body
-    const addNewMovie = await moviesRepository.save(addMovie)
+  const moviesRepository = getRepository(movie)
+  const addMovie = request.body
+  const addNewMovie = await moviesRepository.save(addMovie)
 
-    return response.status(200).json(addNewMovie)
-  } catch (error) {
-    return response.status(500).json(error)
-  }
+  return response.status(200).json(addNewMovie)
 }
 
 export const deleteMovie = async (request, response) => {
