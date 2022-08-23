@@ -1,5 +1,4 @@
 import { movie } from "@models/entity/movie"
-import { datacatalog } from "googleapis/build/src/apis/datacatalog"
 import { getRepository } from "typeorm"
 
 export const itsWorks = (request, response) => {
@@ -7,26 +6,17 @@ export const itsWorks = (request, response) => {
 }
 
 export const getAllMovies = async (request, response) => {
-  try {
-    const moviesRepository = getRepository(movie)
-    const movies = await moviesRepository.find()
-    console.log(movies)
-    return response.status(200).json(movies)
-  } catch (error) {
-    return response.status(500).json(error)
-  }
+  const moviesRepository = getRepository(movie)
+  const movies = await moviesRepository.find()
+  console.log(movies)
+  return response.status(200).json(movies)
 }
 
 export const getMovieId = async (request, response) => {
-  try {
-    const id = request.params
-    const moviesRepository = getRepository(movie)
-    const movieList = await moviesRepository.findOne(id)
+  const moviesRepository = getRepository(movie)
+  const movieList = await moviesRepository.findOne(request.params)
 
-    return response.status(200).json(movieList)
-  } catch (error) {
-    return response.status(404).json(error)
-  }
+  return response.status(200).json({ movieList })
 }
 
 export const postMovie = async (request, response) => {
@@ -38,15 +28,11 @@ export const postMovie = async (request, response) => {
 }
 
 export const deleteMovie = async (request, response) => {
-  try {
-    const moviesRepository = getRepository(movie)
-    const id = request.params
-    const deleteMovie = await moviesRepository.delete(id)
+  const moviesRepository = getRepository(movie)
+  const id = request.params
+  const deleteMovie = await moviesRepository.delete(id)
 
-    return response.status(200).json(deleteMovie)
-  } catch (error) {
-    return response.status(404).json(error)
-  }
+  return response.status(200).json(deleteMovie)
 }
 
 export const updateMovie = async (request, response) => {
