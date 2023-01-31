@@ -1,4 +1,4 @@
-import { postLogin } from "@controllers/login"
+import { getLogin, getUsers, postUsers } from "@controllers/login"
 import {
   deleteMovie,
   getAllMovies,
@@ -11,7 +11,9 @@ import {
 export const defineRoutes = (app) => {
   app.get("/", itsWorks)
 
-  app.post("/login", postLogin)
+  app.post("/users", postUsers)
+  app.get("/login", getLogin)
+  app.get("/users", getUsers)
 
   app.get("/movie", getAllMovies)
   app.get("/movie/:id", getMovieId)
